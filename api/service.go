@@ -102,6 +102,7 @@ func registerConfig(config *gin.RouterGroup) {
 	config.GET("", getConfig)
 	config.POST("", saveConfig)
 
+	config.GET("/services", getService)
 	config.POST("/services", createService)
 	config.PUT("/services/:service", updateService)
 	config.DELETE("/services/:service", deleteService)

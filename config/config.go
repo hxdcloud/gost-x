@@ -238,6 +238,12 @@ type Config struct {
 	Metrics    *MetricsConfig     `yaml:",omitempty" json:"metrics,omitempty"`
 }
 
+type Result struct {
+	Data    any  `json:"data"`
+	Success bool `json:"success"`
+	Total   int  `json:"total"`
+}
+
 func (c *Config) Load() error {
 	if err := v.ReadInConfig(); err != nil {
 		return err
@@ -275,6 +281,26 @@ func (c *Config) Write(w io.Writer, format string) error {
 		enc := yaml.NewEncoder(w)
 		defer enc.Close()
 
+		return enc.Encode(c)
+	}
+}
+
+func (c *Config) WriteServices(w io.Writer, format string) error {
+	var result Result
+	result.Success = true
+	result.Total = len(c.Services)
+	result.Data = c.Services
+	switch format {
+	case "json":
+		enc := json.NewEncoder(w)
+		enc.SetIndent("", "  ")
+		enc.Encode(result)
+		return nil
+	case "yaml":
+		fallthrough
+	default:
+		enc := yaml.NewEncoder(w)
+		defer enc.Close()
 		return enc.Encode(c)
 	}
 }

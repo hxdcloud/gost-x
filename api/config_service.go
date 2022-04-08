@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,53 @@ import (
 	"github.com/hxdcloud/gost-x/config/parsing"
 	"github.com/hxdcloud/gost-x/registry"
 )
+
+// swagger:parameters getServiceRequest
+type getServiceRequest struct {
+	// output format, one of yaml|json, default is json.
+	// in: query
+	Format string `form:"format" json:"format"`
+}
+
+// successful operation.
+// swagger:response getServiceResponse
+type getServiceResponse struct {
+	Config *config.Config
+}
+
+func getService(ctx *gin.Context) {
+	// swagger:route GET /config/services ConfigManagement getServiceRequest
+	//
+	// Get service list.
+	//
+	//     Security:
+	//       basicAuth: []
+	//
+	//     Responses:
+	//       200: createServiceResponse
+
+	var req getConfigRequest
+	ctx.ShouldBindQuery(&req)
+
+	var resp getConfigResponse
+	resp.Config = config.Global()
+
+	buf := &bytes.Buffer{}
+	switch req.Format {
+	case "yaml":
+	default:
+		req.Format = "json"
+	}
+
+	resp.Config.WriteServices(buf, req.Format)
+
+	contentType := "application/json"
+	if req.Format == "yaml" {
+		contentType = "text/x-yaml"
+	}
+
+	ctx.Data(http.StatusOK, contentType, buf.Bytes())
+}
 
 // swagger:parameters createServiceRequest
 type createServiceRequest struct {
