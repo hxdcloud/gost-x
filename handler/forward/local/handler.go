@@ -10,8 +10,8 @@ import (
 	"github.com/go-gost/core/chain"
 	"github.com/go-gost/core/handler"
 	md "github.com/go-gost/core/metadata"
-	netpkg "github.com/go-gost/x/internal/net"
-	"github.com/go-gost/x/registry"
+	netpkg "github.com/hxdcloud/gost-x/internal/net"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func init() {

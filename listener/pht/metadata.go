@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	mdata "github.com/go-gost/core/metadata"
-	mdx "github.com/go-gost/x/metadata"
+	mdx "github.com/hxdcloud/gost-x/metadata"
 )
 
 const (

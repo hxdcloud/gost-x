@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/go-gost/x/internal/util/grpc/proto"
+	pb "github.com/hxdcloud/gost-x/internal/util/grpc/proto"
 )
 
 type conn struct {

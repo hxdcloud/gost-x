@@ -10,8 +10,8 @@ import (
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
 	metrics "github.com/go-gost/core/metrics/wrapper"
-	mdx "github.com/go-gost/x/metadata"
-	"github.com/go-gost/x/registry"
+	mdx "github.com/hxdcloud/gost-x/metadata"
+	"github.com/hxdcloud/gost-x/registry"
 	"golang.org/x/net/http2"
 )
 

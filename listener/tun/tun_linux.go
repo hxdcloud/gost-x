@@ -6,7 +6,7 @@ import (
 	"syscall"
 
 	"github.com/docker/libcontainer/netlink"
-	tun_util "github.com/go-gost/x/internal/util/tun"
+	tun_util "github.com/hxdcloud/gost-x/internal/util/tun"
 	"github.com/milosgajdos/tenus"
 	"github.com/songgao/water"
 )

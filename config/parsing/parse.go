@@ -11,13 +11,13 @@ import (
 	"github.com/go-gost/core/hosts"
 	"github.com/go-gost/core/logger"
 	"github.com/go-gost/core/resolver"
-	admission_impl "github.com/go-gost/x/admission"
-	auth_impl "github.com/go-gost/x/auth"
-	bypass_impl "github.com/go-gost/x/bypass"
-	"github.com/go-gost/x/config"
-	hosts_impl "github.com/go-gost/x/hosts"
-	"github.com/go-gost/x/registry"
-	resolver_impl "github.com/go-gost/x/resolver"
+	admission_impl "github.com/hxdcloud/gost-x/admission"
+	auth_impl "github.com/hxdcloud/gost-x/auth"
+	bypass_impl "github.com/hxdcloud/gost-x/bypass"
+	"github.com/hxdcloud/gost-x/config"
+	hosts_impl "github.com/hxdcloud/gost-x/hosts"
+	"github.com/hxdcloud/gost-x/registry"
+	resolver_impl "github.com/hxdcloud/gost-x/resolver"
 )
 
 func ParseAuther(cfg *config.AutherConfig) auth.Authenticator {

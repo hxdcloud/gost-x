@@ -8,8 +8,8 @@ import (
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
 	metrics "github.com/go-gost/core/metrics/wrapper"
-	pb "github.com/go-gost/x/internal/util/grpc/proto"
-	"github.com/go-gost/x/registry"
+	pb "github.com/hxdcloud/gost-x/internal/util/grpc/proto"
+	"github.com/hxdcloud/gost-x/registry"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )

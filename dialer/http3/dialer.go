@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-gost/core/dialer"
 	md "github.com/go-gost/core/metadata"
-	pht_util "github.com/go-gost/x/internal/util/pht"
-	"github.com/go-gost/x/registry"
+	pht_util "github.com/hxdcloud/gost-x/internal/util/pht"
+	"github.com/hxdcloud/gost-x/registry"
 	"github.com/lucas-clemente/quic-go"
 	"github.com/lucas-clemente/quic-go/http3"
 )

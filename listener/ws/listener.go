@@ -11,9 +11,9 @@ import (
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
 	metrics "github.com/go-gost/core/metrics/wrapper"
-	ws_util "github.com/go-gost/x/internal/util/ws"
-	"github.com/go-gost/x/registry"
 	"github.com/gorilla/websocket"
+	ws_util "github.com/hxdcloud/gost-x/internal/util/ws"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func init() {

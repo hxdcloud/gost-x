@@ -8,8 +8,8 @@ import (
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
 	metrics "github.com/go-gost/core/metrics/wrapper"
-	quic_util "github.com/go-gost/x/internal/util/quic"
-	"github.com/go-gost/x/registry"
+	quic_util "github.com/hxdcloud/gost-x/internal/util/quic"
+	"github.com/hxdcloud/gost-x/registry"
 	"github.com/lucas-clemente/quic-go"
 )
 

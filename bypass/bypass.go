@@ -6,7 +6,7 @@ import (
 
 	bypass_pkg "github.com/go-gost/core/bypass"
 	"github.com/go-gost/core/logger"
-	"github.com/go-gost/x/internal/util/matcher"
+	"github.com/hxdcloud/gost-x/internal/util/matcher"
 )
 
 type options struct {

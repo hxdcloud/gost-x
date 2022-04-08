@@ -8,10 +8,10 @@ import (
 
 	"github.com/go-gost/core/logger"
 	"github.com/go-gost/relay"
-	netpkg "github.com/go-gost/x/internal/net"
-	"github.com/go-gost/x/internal/net/udp"
-	"github.com/go-gost/x/internal/util/mux"
-	relay_util "github.com/go-gost/x/internal/util/relay"
+	netpkg "github.com/hxdcloud/gost-x/internal/net"
+	"github.com/hxdcloud/gost-x/internal/net/udp"
+	"github.com/hxdcloud/gost-x/internal/util/mux"
+	relay_util "github.com/hxdcloud/gost-x/internal/util/relay"
 )
 
 func (h *relayHandler) handleBind(ctx context.Context, conn net.Conn, network, address string, log logger.Logger) error {

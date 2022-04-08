@@ -12,9 +12,9 @@ import (
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
 	metrics "github.com/go-gost/core/metrics/wrapper"
-	ssh_util "github.com/go-gost/x/internal/util/ssh"
-	sshd_util "github.com/go-gost/x/internal/util/sshd"
-	"github.com/go-gost/x/registry"
+	ssh_util "github.com/hxdcloud/gost-x/internal/util/ssh"
+	sshd_util "github.com/hxdcloud/gost-x/internal/util/sshd"
+	"github.com/hxdcloud/gost-x/registry"
 	"golang.org/x/crypto/ssh"
 )
 

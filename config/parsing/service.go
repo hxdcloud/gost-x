@@ -8,10 +8,10 @@ import (
 	"github.com/go-gost/core/listener"
 	"github.com/go-gost/core/logger"
 	"github.com/go-gost/core/service"
-	"github.com/go-gost/x/config"
-	tls_util "github.com/go-gost/x/internal/util/tls"
-	"github.com/go-gost/x/metadata"
-	"github.com/go-gost/x/registry"
+	"github.com/hxdcloud/gost-x/config"
+	tls_util "github.com/hxdcloud/gost-x/internal/util/tls"
+	"github.com/hxdcloud/gost-x/metadata"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func ParseService(cfg *config.ServiceConfig) (service.Service, error) {

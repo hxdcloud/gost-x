@@ -7,8 +7,8 @@ import (
 
 	"github.com/go-gost/core/connector"
 	md "github.com/go-gost/core/metadata"
-	ssh_util "github.com/go-gost/x/internal/util/ssh"
-	"github.com/go-gost/x/registry"
+	ssh_util "github.com/hxdcloud/gost-x/internal/util/ssh"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func init() {

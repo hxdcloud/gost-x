@@ -1,4 +1,4 @@
-module github.com/go-gost/x
+module github.com/hxdcloud/gost-x
 
 go 1.18
 

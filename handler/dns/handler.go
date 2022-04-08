@@ -16,9 +16,9 @@ import (
 	"github.com/go-gost/core/hosts"
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
-	resolver_util "github.com/go-gost/x/internal/util/resolver"
-	"github.com/go-gost/x/registry"
-	"github.com/go-gost/x/resolver/exchanger"
+	resolver_util "github.com/hxdcloud/gost-x/internal/util/resolver"
+	"github.com/hxdcloud/gost-x/registry"
+	"github.com/hxdcloud/gost-x/resolver/exchanger"
 	"github.com/miekg/dns"
 )
 

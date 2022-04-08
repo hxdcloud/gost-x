@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 
 	mdata "github.com/go-gost/core/metadata"
-	ssh_util "github.com/go-gost/x/internal/util/ssh"
-	mdx "github.com/go-gost/x/metadata"
+	ssh_util "github.com/hxdcloud/gost-x/internal/util/ssh"
+	mdx "github.com/hxdcloud/gost-x/metadata"
 	"golang.org/x/crypto/ssh"
 )
 

@@ -10,8 +10,8 @@ import (
 	"github.com/go-gost/core/connector"
 	"github.com/go-gost/core/logger"
 	"github.com/go-gost/relay"
-	"github.com/go-gost/x/internal/util/mux"
-	relay_util "github.com/go-gost/x/internal/util/relay"
+	"github.com/hxdcloud/gost-x/internal/util/mux"
+	relay_util "github.com/hxdcloud/gost-x/internal/util/relay"
 )
 
 // Bind implements connector.Binder.

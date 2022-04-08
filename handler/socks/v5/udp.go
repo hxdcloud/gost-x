@@ -11,8 +11,8 @@ import (
 
 	"github.com/go-gost/core/logger"
 	"github.com/go-gost/gosocks5"
-	"github.com/go-gost/x/internal/net/udp"
-	"github.com/go-gost/x/internal/util/socks"
+	"github.com/hxdcloud/gost-x/internal/net/udp"
+	"github.com/hxdcloud/gost-x/internal/util/socks"
 )
 
 func (h *socks5Handler) handleUDP(ctx context.Context, conn net.Conn, log logger.Logger) error {

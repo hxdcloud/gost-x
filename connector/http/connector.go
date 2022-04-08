@@ -14,8 +14,8 @@ import (
 	"github.com/go-gost/core/connector"
 	"github.com/go-gost/core/logger"
 	md "github.com/go-gost/core/metadata"
-	"github.com/go-gost/x/internal/util/socks"
-	"github.com/go-gost/x/registry"
+	"github.com/hxdcloud/gost-x/internal/util/socks"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func init() {

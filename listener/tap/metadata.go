@@ -2,8 +2,8 @@ package tap
 
 import (
 	mdata "github.com/go-gost/core/metadata"
-	tap_util "github.com/go-gost/x/internal/util/tap"
-	mdx "github.com/go-gost/x/metadata"
+	tap_util "github.com/hxdcloud/gost-x/internal/util/tap"
+	mdx "github.com/hxdcloud/gost-x/metadata"
 )
 
 const (

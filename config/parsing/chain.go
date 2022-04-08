@@ -5,10 +5,10 @@ import (
 	"github.com/go-gost/core/connector"
 	"github.com/go-gost/core/dialer"
 	"github.com/go-gost/core/logger"
-	"github.com/go-gost/x/config"
-	tls_util "github.com/go-gost/x/internal/util/tls"
-	"github.com/go-gost/x/metadata"
-	"github.com/go-gost/x/registry"
+	"github.com/hxdcloud/gost-x/config"
+	tls_util "github.com/hxdcloud/gost-x/internal/util/tls"
+	"github.com/hxdcloud/gost-x/metadata"
+	"github.com/hxdcloud/gost-x/registry"
 )
 
 func ParseChain(cfg *config.ChainConfig) (chain.Chainer, error) {

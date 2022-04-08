@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	tun_util "github.com/go-gost/x/internal/util/tun"
+	tun_util "github.com/hxdcloud/gost-x/internal/util/tun"
 	"github.com/songgao/water"
 )
 
