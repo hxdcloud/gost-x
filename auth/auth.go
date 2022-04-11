@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-gost/core/auth"
 	"github.com/go-gost/core/logger"
-	"github.com/go-gost/x/internal/loader"
+	"github.com/hxdcloud/gost-x/internal/loader"
 )
 
 type options struct {

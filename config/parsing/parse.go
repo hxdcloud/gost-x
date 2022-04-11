@@ -17,6 +17,8 @@ import (
 	bypass_impl "github.com/hxdcloud/gost-x/bypass"
 	"github.com/hxdcloud/gost-x/config"
 	hosts_impl "github.com/hxdcloud/gost-x/hosts"
+	"github.com/hxdcloud/gost-x/internal/loader"
+	recorder_impl "github.com/hxdcloud/gost-x/recorder"
 	"github.com/hxdcloud/gost-x/registry"
 	resolver_impl "github.com/hxdcloud/gost-x/resolver"
 )
