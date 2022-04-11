@@ -10,6 +10,7 @@ import (
 	"github.com/go-gost/core/chain"
 	"github.com/go-gost/core/hosts"
 	"github.com/go-gost/core/logger"
+	"github.com/go-gost/core/recorder"
 	"github.com/go-gost/core/resolver"
 	admission_impl "github.com/hxdcloud/gost-x/admission"
 	auth_impl "github.com/hxdcloud/gost-x/auth"
@@ -34,19 +35,39 @@ func ParseAuther(cfg *config.AutherConfig) auth.Authenticator {
 		m[user.Username] = user.Password
 	}
 
-	if len(m) == 0 {
-		return nil
+	opts := []auth_impl.Option{
+		auth_impl.AuthsPeriodOption(m),
+		auth_impl.ReloadPeriodOption(cfg.Reload),
+		auth_impl.LoggerOption(logger.Default().WithFields(map[string]any{
+			"kind":   "auther",
+			"auther": cfg.Name,
+		})),
 	}
-	return auth_impl.NewAuthenticator(m)
+	if cfg.File != nil && cfg.File.Path != "" {
+		opts = append(opts, auth_impl.FileLoaderOption(loader.FileLoader(cfg.File.Path)))
+	}
+	if cfg.Redis != nil && cfg.Redis.Addr != "" {
+		opts = append(opts, auth_impl.RedisLoaderOption(loader.RedisHashLoader(
+			cfg.Redis.Addr,
+			loader.DBRedisLoaderOption(cfg.Redis.DB),
+			loader.PasswordRedisLoaderOption(cfg.Redis.Password),
+			loader.KeyRedisLoaderOption(cfg.Redis.Key),
+		)))
+	}
+
+	return auth_impl.NewAuthenticator(opts...)
 }
 
 func ParseAutherFromAuth(au *config.AuthConfig) auth.Authenticator {
 	if au == nil || au.Username == "" {
 		return nil
 	}
-	return auth_impl.NewAuthenticator(map[string]string{
-		au.Username: au.Password,
-	})
+	return auth_impl.NewAuthenticator(
+		auth_impl.AuthsPeriodOption(
+			map[string]string{
+				au.Username: au.Password,
+			},
+		))
 }
 
 func parseAuth(cfg *config.AuthConfig) *url.Userinfo {
@@ -88,28 +109,55 @@ func ParseAdmission(cfg *config.AdmissionConfig) admission.Admission {
 	if cfg == nil {
 		return nil
 	}
-	return admission_impl.NewAdmissionPatterns(
-		cfg.Reverse,
-		cfg.Matchers,
+	opts := []admission_impl.Option{
+		admission_impl.MatchersOption(cfg.Matchers),
+		admission_impl.ReverseOption(cfg.Reverse),
+		admission_impl.ReloadPeriodOption(cfg.Reload),
 		admission_impl.LoggerOption(logger.Default().WithFields(map[string]any{
 			"kind":      "admission",
 			"admission": cfg.Name,
 		})),
-	)
+	}
+	if cfg.File != nil && cfg.File.Path != "" {
+		opts = append(opts, admission_impl.FileLoaderOption(loader.FileLoader(cfg.File.Path)))
+	}
+	if cfg.Redis != nil && cfg.Redis.Addr != "" {
+		opts = append(opts, admission_impl.RedisLoaderOption(loader.RedisSetLoader(
+			cfg.Redis.Addr,
+			loader.DBRedisLoaderOption(cfg.Redis.DB),
+			loader.PasswordRedisLoaderOption(cfg.Redis.Password),
+			loader.KeyRedisLoaderOption(cfg.Redis.Key),
+		)))
+	}
+	return admission_impl.NewAdmission(opts...)
 }
 
 func ParseBypass(cfg *config.BypassConfig) bypass.Bypass {
 	if cfg == nil {
 		return nil
 	}
-	return bypass_impl.NewBypassPatterns(
-		cfg.Reverse,
-		cfg.Matchers,
+
+	opts := []bypass_impl.Option{
+		bypass_impl.MatchersOption(cfg.Matchers),
+		bypass_impl.ReverseOption(cfg.Reverse),
+		bypass_impl.ReloadPeriodOption(cfg.Reload),
 		bypass_impl.LoggerOption(logger.Default().WithFields(map[string]any{
 			"kind":   "bypass",
 			"bypass": cfg.Name,
 		})),
-	)
+	}
+	if cfg.File != nil && cfg.File.Path != "" {
+		opts = append(opts, bypass_impl.FileLoaderOption(loader.FileLoader(cfg.File.Path)))
+	}
+	if cfg.Redis != nil && cfg.Redis.Addr != "" {
+		opts = append(opts, bypass_impl.RedisLoaderOption(loader.RedisSetLoader(
+			cfg.Redis.Addr,
+			loader.DBRedisLoaderOption(cfg.Redis.DB),
+			loader.PasswordRedisLoaderOption(cfg.Redis.Password),
+			loader.KeyRedisLoaderOption(cfg.Redis.Key),
+		)))
+	}
+	return bypass_impl.NewBypass(opts...)
 }
 
 func ParseResolver(cfg *config.ResolverConfig) (resolver.Resolver, error) {
@@ -162,4 +210,36 @@ func ParseHosts(cfg *config.HostsConfig) hosts.HostMapper {
 		hosts.Map(ip, host.Hostname, host.Aliases...)
 	}
 	return hosts
+}
+
+func ParseRecorder(cfg *config.RecorderConfig) (r recorder.Recorder) {
+	if cfg == nil {
+		return nil
+	}
+
+	if cfg.File != nil && cfg.File.Path != "" {
+		return recorder_impl.FileRecorder(cfg.File.Path,
+			recorder_impl.SepRecorderOption(cfg.File.Sep))
+	}
+
+	if cfg.Redis != nil &&
+		cfg.Redis.Addr != "" &&
+		cfg.Redis.Key != "" {
+		switch cfg.Redis.Type {
+		case "list": // redis list
+			return recorder_impl.RedisListRecorder(cfg.Redis.Addr,
+				recorder_impl.DBRedisRecorderOption(cfg.Redis.DB),
+				recorder_impl.KeyRedisRecorderOption(cfg.Redis.Key),
+				recorder_impl.PasswordRedisRecorderOption(cfg.Redis.Password),
+			)
+		default: // redis set
+			return recorder_impl.RedisSetRecorder(cfg.Redis.Addr,
+				recorder_impl.DBRedisRecorderOption(cfg.Redis.DB),
+				recorder_impl.KeyRedisRecorderOption(cfg.Redis.Key),
+				recorder_impl.PasswordRedisRecorderOption(cfg.Redis.Password),
+			)
+		}
+	}
+
+	return
 }

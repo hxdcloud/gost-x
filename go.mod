@@ -7,11 +7,13 @@ require (
 	github.com/docker/libcontainer v2.2.1+incompatible
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-gost/core v0.0.0-20220408131722-a117222cde09
+	github.com/go-gost/core v0.0.0-20220411145302-03988fee0b9a
 	github.com/go-gost/gosocks4 v0.0.1
 	github.com/go-gost/gosocks5 v0.3.1-0.20211109033403-d894d75b7f09
 	github.com/go-gost/relay v0.1.1-0.20211123134818-8ef7fd81ffd7
 	github.com/go-gost/tls-dissector v0.0.2-0.20220408131628-aac992c27451
+	github.com/go-gost/x v0.0.0-20220411151420-4808441fb399
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gobwas/glob v0.2.3
 	github.com/golang/snappy v0.0.4
 	github.com/gorilla/websocket v1.5.0
@@ -42,6 +44,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/cheekybits/genny v1.0.0 // indirect
 	github.com/coreos/go-iptables v0.5.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect

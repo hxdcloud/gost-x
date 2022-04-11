@@ -74,11 +74,11 @@ type TLSConfig struct {
 }
 
 type AutherConfig struct {
-	Name string `json:"name"`
-	// inline, file, redis, etc.
-	Type  string        `yaml:",omitempty" json:"type,omitempty"`
-	Auths []*AuthConfig `yaml:",omitempty" json:"auths"`
-	// File string        `yaml:",omitempty" json:"file"`
+	Name   string        `json:"name"`
+	Auths  []*AuthConfig `yaml:",omitempty" json:"auths"`
+	Reload time.Duration `yaml:",omitempty" json:"reload,omitempty"`
+	File   *FileLoader   `yaml:",omitempty" json:"file,omitempty"`
+	Redis  *RedisLoader  `yaml:",omitempty" json:"redis,omitempty"`
 }
 
 type AuthConfig struct {
@@ -93,19 +93,32 @@ type SelectorConfig struct {
 }
 
 type AdmissionConfig struct {
-	Name string `json:"name"`
-	// inline, file, etc.
-	Type     string   `yaml:",omitempty" json:"type,omitempty"`
-	Reverse  bool     `yaml:",omitempty" json:"reverse,omitempty"`
-	Matchers []string `json:"matchers"`
+	Name     string        `json:"name"`
+	Reverse  bool          `yaml:",omitempty" json:"reverse,omitempty"`
+	Matchers []string      `json:"matchers"`
+	Reload   time.Duration `yaml:",omitempty" json:"reload,omitempty"`
+	File     *FileLoader   `yaml:",omitempty" json:"file,omitempty"`
+	Redis    *RedisLoader  `yaml:",omitempty" json:"redis,omitempty"`
 }
 
 type BypassConfig struct {
-	Name string `json:"name"`
-	// inline, file, etc.
-	Type     string   `yaml:",omitempty" json:"type,omitempty"`
-	Reverse  bool     `yaml:",omitempty" json:"reverse,omitempty"`
-	Matchers []string `json:"matchers"`
+	Name     string        `json:"name"`
+	Reverse  bool          `yaml:",omitempty" json:"reverse,omitempty"`
+	Matchers []string      `json:"matchers"`
+	Reload   time.Duration `yaml:",omitempty" json:"reload,omitempty"`
+	File     *FileLoader   `yaml:",omitempty" json:"file,omitempty"`
+	Redis    *RedisLoader  `yaml:",omitempty" json:"redis,omitempty"`
+}
+
+type FileLoader struct {
+	Path string `json:"path"`
+}
+
+type RedisLoader struct {
+	Addr     string `json:"addr"`
+	DB       int    `yaml:",omitempty" json:"db,omitempty"`
+	Password string `yaml:",omitempty" json:"password,omitempty"`
+	Key      string `yaml:",omitempty" json:"key,omitempty"`
 }
 
 type NameserverConfig struct {
@@ -119,9 +132,7 @@ type NameserverConfig struct {
 }
 
 type ResolverConfig struct {
-	Name string `json:"name"`
-	// inline, file, etc.
-	Type        string              `yaml:",omitempty" json:"type,omitempty"`
+	Name        string              `json:"name"`
 	Nameservers []*NameserverConfig `json:"nameservers"`
 }
 
@@ -132,10 +143,32 @@ type HostMappingConfig struct {
 }
 
 type HostsConfig struct {
-	Name string `json:"name"`
-	// inline, file, etc.
-	Type     string               `yaml:",omitempty" json:"type,omitempty"`
+	Name     string               `json:"name"`
 	Mappings []*HostMappingConfig `json:"mappings"`
+}
+
+type RecorderConfig struct {
+	Name  string         `json:"name"`
+	File  *FileRecorder  `yaml:",omitempty" json:"file,omitempty"`
+	Redis *RedisRecorder `yaml:",omitempty" json:"redis,omitempty"`
+}
+
+type FileRecorder struct {
+	Path string `json:"path"`
+	Sep  string `yaml:",omitempty" json:"sep,omitempty"`
+}
+
+type RedisRecorder struct {
+	Addr     string `json:"addr"`
+	DB       int    `yaml:",omitempty" json:"db,omitempty"`
+	Password string `yaml:",omitempty" json:"password,omitempty"`
+	Key      string `yaml:",omitempty" json:"key,omitempty"`
+	Type     string `yaml:",omitempty" json:"type,omitempty"`
+}
+
+type RecorderObject struct {
+	Name   string `json:"name"`
+	Record string `json:"record"`
 }
 
 type ListenerConfig struct {
@@ -181,17 +214,18 @@ type SockOptsConfig struct {
 }
 
 type ServiceConfig struct {
-	Name      string           `json:"name"`
-	Addr      string           `yaml:",omitempty" json:"addr,omitempty"`
-	Interface string           `yaml:",omitempty" json:"interface,omitempty"`
-	SockOpts  *SockOptsConfig  `yaml:"sockopts,omitempty" json:"sockopts,omitempty"`
-	Admission string           `yaml:",omitempty" json:"admission,omitempty"`
-	Bypass    string           `yaml:",omitempty" json:"bypass,omitempty"`
-	Resolver  string           `yaml:",omitempty" json:"resolver,omitempty"`
-	Hosts     string           `yaml:",omitempty" json:"hosts,omitempty"`
-	Handler   *HandlerConfig   `yaml:",omitempty" json:"handler,omitempty"`
-	Listener  *ListenerConfig  `yaml:",omitempty" json:"listener,omitempty"`
-	Forwarder *ForwarderConfig `yaml:",omitempty" json:"forwarder,omitempty"`
+	Name      string            `json:"name"`
+	Addr      string            `yaml:",omitempty" json:"addr,omitempty"`
+	Interface string            `yaml:",omitempty" json:"interface,omitempty"`
+	SockOpts  *SockOptsConfig   `yaml:"sockopts,omitempty" json:"sockopts,omitempty"`
+	Admission string            `yaml:",omitempty" json:"admission,omitempty"`
+	Bypass    string            `yaml:",omitempty" json:"bypass,omitempty"`
+	Resolver  string            `yaml:",omitempty" json:"resolver,omitempty"`
+	Hosts     string            `yaml:",omitempty" json:"hosts,omitempty"`
+	Recorders []*RecorderObject `yaml:",omitempty" json:"recorders,omitempty"`
+	Handler   *HandlerConfig    `yaml:",omitempty" json:"handler,omitempty"`
+	Listener  *ListenerConfig   `yaml:",omitempty" json:"listener,omitempty"`
+	Forwarder *ForwarderConfig  `yaml:",omitempty" json:"forwarder,omitempty"`
 }
 
 type ChainConfig struct {
@@ -231,6 +265,7 @@ type Config struct {
 	Bypasses   []*BypassConfig    `yaml:",omitempty" json:"bypasses,omitempty"`
 	Resolvers  []*ResolverConfig  `yaml:",omitempty" json:"resolvers,omitempty"`
 	Hosts      []*HostsConfig     `yaml:",omitempty" json:"hosts,omitempty"`
+	Recorders  []*RecorderConfig  `yaml:",omitempty" json:"recorders,omitempty"`
 	TLS        *TLSConfig         `yaml:",omitempty" json:"tls,omitempty"`
 	Log        *LogConfig         `yaml:",omitempty" json:"log,omitempty"`
 	Profiling  *ProfilingConfig   `yaml:",omitempty" json:"profiling,omitempty"`

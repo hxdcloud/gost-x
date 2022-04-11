@@ -2,6 +2,7 @@ package registry
 
 import (
 	"errors"
+	"io"
 	"sync"
 
 	"github.com/go-gost/core/admission"
@@ -9,6 +10,7 @@ import (
 	"github.com/go-gost/core/bypass"
 	"github.com/go-gost/core/chain"
 	"github.com/go-gost/core/hosts"
+	"github.com/go-gost/core/recorder"
 	"github.com/go-gost/core/resolver"
 	"github.com/go-gost/core/service"
 )
@@ -30,6 +32,7 @@ var (
 	bypassReg    Registry[bypass.Bypass]       = &bypassRegistry{}
 	resolverReg  Registry[resolver.Resolver]   = &resolverRegistry{}
 	hostsReg     Registry[hosts.HostMapper]    = &hostsRegistry{}
+	recorderReg  Registry[recorder.Recorder]   = &recorderRegistry{}
 )
 
 type Registry[T any] interface {
@@ -55,7 +58,12 @@ func (r *registry) Register(name string, v any) error {
 }
 
 func (r *registry) Unregister(name string) {
-	r.m.Delete(name)
+	if v, ok := r.m.Load(name); ok {
+		if closer, ok := v.(io.Closer); ok {
+			closer.Close()
+		}
+		r.m.Delete(name)
+	}
 }
 
 func (r *registry) IsRegistered(name string) bool {
@@ -113,4 +121,8 @@ func ResolverRegistry() Registry[resolver.Resolver] {
 
 func HostsRegistry() Registry[hosts.HostMapper] {
 	return hostsReg
+}
+
+func RecorderRegistry() Registry[recorder.Recorder] {
+	return recorderReg
 }
